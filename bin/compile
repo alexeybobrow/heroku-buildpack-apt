@@ -8,8 +8,8 @@ set -e
 set -x
 
 # parse and derive params
-BUILD_DIR=$1
-CACHE_DIR=$2
+BUILD_DIR=$1 # /tmp/build
+CACHE_DIR=$2 # /cache
 LP_DIR=$(cd $(dirname "$0"); cd ..; pwd)
 
 function error() {
@@ -50,10 +50,11 @@ for PACKAGE in $(cat $BUILD_DIR/Aptfile); do
 
     topic "Fetching $PACKAGE"
     curl -k -o "$PACKAGE_FILE" "$PACKAGE" | indent
+    cat "$BUILD_DIR/Aptfile"
   else
     topic "Fetching .debs for $PACKAGE"
     echo "apt-get $APT_OPTIONS -y --force-yes -d install --reinstall $PACKAGE"
-    apt-get "$APT_OPTIONS" -y --allow -d install --reinstall $PACKAGE | indent
+    apt-get "$APT_OPTIONS" -y -d install --reinstall "$PACKAGE" | indent
   fi
 done
 
@@ -62,7 +63,7 @@ mkdir -p "$BUILD_DIR"/.apt
 ls -1 $APT_CACHE_DIR/archives/*.deb
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   topic "Installing $(basename $DEB)"
-  dpkg -i "$DEB" "$BUILD_DIR/.apt/"
+  dpkg -x "$DEB" "$BUILD_DIR/.apt/"
 done
 
 topic "Writing profile script"
