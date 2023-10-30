@@ -62,7 +62,7 @@ mkdir -p "$BUILD_DIR"/.apt
 ls -1 $APT_CACHE_DIR/archives/*.deb
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   topic "Installing $(basename $DEB)"
-  dpkg -i "$DEB" "$BUILD_DIR/.apt/"
+  sudo dpkg -i "$DEB" "$BUILD_DIR/.apt/"
 done
 
 topic "Writing profile script"
