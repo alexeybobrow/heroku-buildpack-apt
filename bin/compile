@@ -11,7 +11,7 @@ set -x
 BUILD_DIR=$1
 CACHE_DIR=$2
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
-
+whoami
 function error() {
   echo " !     $*" >&2
   exit 1
@@ -38,7 +38,7 @@ mkdir -p "$APT_STATE_DIR/lists/partial"
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 
 topic "Updating apt caches"
-apt "$APT_OPTIONS" update | indent
+sudo apt-get "$APT_OPTIONS" update | indent
 rm -rf "$APT_CACHE_DIR"/archives/*.deb
 topic "Install packages from Aptfile"
 for PACKAGE in $(cat "$BUILD_DIR"/Aptfile); do
