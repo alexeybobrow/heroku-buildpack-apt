@@ -62,10 +62,9 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
 done
 
 topic "Install Node $NODE_VERSION"
-curl -o $APT_CACHE_DIR/archives/node-$NODE_VERSION-linux-x64.tar.gz http://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz
-tar xzf $APT_CACHE_DIR/archives/node-$NODE_VERSION-linux-x64.tar.gz
-cp -rp $APT_CACHE_DIR/archives/node-$NODE_VERSION-linux-x64 /app/node/
-ln -s /app/node/node-$NODE_VERSION-linux-x64 /usr/local/node
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+source ~/.bashrc
+nvm install $NODE_VERSION
 
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
