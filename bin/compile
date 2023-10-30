@@ -11,7 +11,7 @@ set -e
 BUILD_DIR=$1
 CACHE_DIR=$2
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
-NODE_VERSION="v0.10.30"
+NODE_VERSION=v0.10.30
 
 function error() {
   echo " !     $*" >&2
@@ -62,10 +62,10 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
 done
 
 topic "Install Node $NODE_VERSION"
-curl -LO http://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz
-tar xzf node-$NODE_VERSION-linux-x64.tar.gz
-cp -rp node-$NODE_VERSION-linux-x64 /usr/local/
-ln -s /usr/local/node-$NODE_VERSION-linux-x64 /usr/local/node
+curl -o $APT_CACHE_DIR/archives/node-$NODE_VERSION-linux-x64.tar.gz http://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz
+tar xzf $APT_CACHE_DIR/archives/node-$NODE_VERSION-linux-x64.tar.gz
+cp -rp $APT_CACHE_DIR/archives/node-$NODE_VERSION-linux-x64 /app/node/
+ln -s /app/node/node-$NODE_VERSION-linux-x64 /usr/local/node
 
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
