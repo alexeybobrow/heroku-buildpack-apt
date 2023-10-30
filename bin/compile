@@ -41,14 +41,18 @@ topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
 for PACKAGE in $(cat $BUILD_DIR/Aptfile); do
+  echo "$PACKAGE"
   if [[ $PACKAGE == *deb ]]; then
     PACKAGE_NAME=$(basename $PACKAGE .deb)
+    echo "$PACKAGE_NAME"
     PACKAGE_FILE=$APT_CACHE_DIR/archives/$PACKAGE_NAME.deb
+    echo "$PACKAGE_FILE"
 
     topic "Fetching $PACKAGE"
     curl -k -o $PACKAGE_FILE $PACKAGE | indent
   else
     topic "Fetching .debs for $PACKAGE"
+    echo "apt-get $APT_OPTIONS -y --force-yes -d install --reinstall $PACKAGE"
     apt-get $APT_OPTIONS -y --force-yes -d install --reinstall $PACKAGE | indent
   fi
 done
