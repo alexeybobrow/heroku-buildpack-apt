@@ -67,6 +67,7 @@ export NVM_DIR="$HOME/.nvm"
        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 nvm install $NODE_VERSION
 node --version
+export EXECJS_RUNTIME=Node
 
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
