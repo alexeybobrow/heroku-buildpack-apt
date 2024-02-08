@@ -72,7 +72,7 @@ export EXECJS_RUNTIME=Node
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/000_apt.sh
-export NVM_DIR="$HOME/.nvm"
+export PATH="$HOME/.nvm:$PATH"
 export EXECJS_RUNTIME=Node
 export PATH="\$HOME/.apt/usr/bin:\$PATH"
 export LD_LIBRARY_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu:\$HOME/.apt/usr/lib/i386-linux-gnu:\$HOME/.apt/usr/lib:\$LD_LIBRARY_PATH"
@@ -85,7 +85,7 @@ EOF
 
 export NVM_DIR="$HOME/.nvm"
 export EXECJS_RUNTIME=Node
-export PATH="$BUILD_DIR/.apt/usr/bin:$PATH"
+export PATH="$HOME/.nvm:$BUILD_DIR/.apt/usr/bin:$PATH"
 export LD_LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:$LD_LIBRARY_PATH"
 export LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:$LIBRARY_PATH"
 export INCLUDE_PATH="$BUILD_DIR/.apt/usr/include:$INCLUDE_PATH"
